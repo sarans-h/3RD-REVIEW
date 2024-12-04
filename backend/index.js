@@ -5,7 +5,7 @@ import fileUpload from "express-fileupload";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import connectDB from "./config/database.js";
-
+import authRoutes from './routes/auth.routes.js'
 dotenv.config({ path: "./config/config.env" });
 connectDB();
 
@@ -20,7 +20,7 @@ app.use(fileUpload());
 app.get("/", (req, res) => {
   res.send("Server working 🔥");
 });
-
+app.use("/api/auth", authRoutes);
 app.listen(8080, () => {
   console.log("Server connected at port 8080");
 });
