@@ -4,7 +4,7 @@ import { createBusiness } from "../controllers/business.controller.js";
 
 const router =  express.Router();
 
-router.post(`/createBusiness`, verifyToken, createBusiness);
+router.post(`/createbusiness`, verifyToken, createBusiness);
 // router.get('/getPostComments/:postId', getPostComments);
 // router.put(`/likeComment/:commentId`, verifyToken ,likeComment)
 export default router;

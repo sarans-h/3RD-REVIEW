@@ -1,5 +1,6 @@
 import { errorHandler } from '../utils/error.js';
 import Business from '../models/business.model.js';
+import User from '../models/user.model.js';
 
 export const createBusiness = async (req,res,next) => {
     const userId = req.user.id;
@@ -16,6 +17,10 @@ export const createBusiness = async (req,res,next) => {
     try{
         const business = new Business({ ownerId:userId, domain });
         await business.save();
+
+        const user = await User.findById(userId);
+        user.businessIds.push(business._id);
+        await user.save();
 
         res.status(201).json(business);
     }
