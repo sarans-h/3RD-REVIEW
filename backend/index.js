@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import businessRoutes from './routes/business.routes.js';
+import productRoutes from './routes/product.routes.js';
 import authRoutes from './routes/auth.routes.js'
 dotenv.config({ path: "./config/config.env" });
 connectDB();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/business", businessRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/product",productRoutes)
 app.listen(8080, () => {
   console.log("Server connected at port 8080");
 });
