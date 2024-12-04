@@ -3,7 +3,7 @@ const reviewSchema = new mongoose.Schema(
   {
     productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product", // Linking review to a product
+        ref: "Product", 
         required: true,
     },
     stars: {

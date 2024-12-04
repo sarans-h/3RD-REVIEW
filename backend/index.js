@@ -24,3 +24,14 @@ app.get("/", (req, res) => {
 app.listen(8080, () => {
   console.log("Server connected at port 8080");
 });
+
+//this middleware will be called when an error is tackled , this is to increase code reusability
+app.use((err, req, res, next)=>{
+  const statusCode = err.StatusCode || 500;
+  const message = err.message || 'Internal Server error';
+  res.status(statusCode).json({
+      success:false,
+      statusCode,
+      message
+  })
+})
