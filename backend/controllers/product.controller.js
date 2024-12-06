@@ -3,7 +3,7 @@ import Product from '../models/product.model.js';
 import User from '../models/user.model.js';
 import Business from '../models/business.model.js';
 
-//create product
+// create product
 export const createProduct = async (req,res,next) => {
     const userId = req.user.id;
     const user = await User.findById(userId);
