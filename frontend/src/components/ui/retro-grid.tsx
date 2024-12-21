@@ -10,7 +10,7 @@ export default function RetroGrid({
   return (
     <div
       className={cn(
-        "absolute size-full overflow-hidden opacity-20 [perspective:100px] ",
+        "absolute size-full overflow-hidden bg-opacity-100 [perspective:100px] ",
         className,
       )}
       style={{ "--grid-angle": `${angle}deg` } as React.CSSProperties}
