@@ -4,7 +4,7 @@ const PricingCard = ({ title, price, features, active }) => (
   <div
     className={`relative flex flex-col items-center justify-between p-6 rounded-2xl shadow-lg border border-[#f0f0f048]  ${
       active
-        ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white"
+        ? "bg-[#121315] text-gray-300"
         : "bg-[#121315] text-gray-300"
     }`}
     style={{ minHeight: "420px" }}
@@ -12,7 +12,7 @@ const PricingCard = ({ title, price, features, active }) => (
     <div className="absolute top-[-12px] left-0 right-0 flex justify-center">
       <span
         className={`px-4 py-1 rounded-full text-sm font-medium ${
-          active ? "bg-white text-orange-500" : "bg-gray-700 text-gray-300"
+          active ? "bg-white text-black" : "bg-gray-700 text-gray-300"
         }`}
       >
         {title}
@@ -43,8 +43,8 @@ const PricingCard = ({ title, price, features, active }) => (
     <button
       className={`mt-6 px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
         active
-          ? "bg-white text-orange-500 hover:shadow-lg"
-          : "bg-orange-500 text-white hover:bg-orange-600"
+          ? "bg-white text-black hover:shadow-lg"
+          : "bg-white text-black hover:shadow-lg"
       }`}
     >
       Get Started

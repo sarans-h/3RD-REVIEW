@@ -49,7 +49,8 @@ export const signin = async (req, res, next) => {
 
      const { password :pass, ...rest} = validUser._doc
     res.status(200).cookie('access_token', token, {
-        httpOnly: true,
+        // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
+        path: '/',
       })
       .json(rest);
   } catch (error) {

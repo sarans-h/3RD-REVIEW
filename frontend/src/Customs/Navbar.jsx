@@ -1,10 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { ChevronDown, Menu } from "lucide-react";
-const Navbar = ({ scrollToSection }) => {
+import { Navigate, useNavigate } from "react-router-dom";
+import { Toaster,toast } from "react-hot-toast";
+const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const handleLogout = () => {
+    document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    setIsAuthenticated(false);
+    toast.success("Logged Out Successfully");
+  };
 
+  const navigate=useNavigate();
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -52,6 +60,11 @@ const Navbar = ({ scrollToSection }) => {
             >
               Contact
             </button>
+            {isAuthenticated?<button onClick={()=>{handleLogout()}} className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>:
+            
+            <button className="bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent" onClick={()=>navigate("/login")} >
+              Login/Signup
+            </button>}
           </div>
 
           {/* Mobile Menu */}
@@ -97,6 +110,16 @@ const Navbar = ({ scrollToSection }) => {
           </div>
         </div>
       </div>
+      <Toaster  toastOptions={{
+    className: '',
+    style: {
+      height: '40px',
+      
+      background: '#151719',
+      color: 'white',
+      border: '1px solid white',
+    },
+  }}/>
     </nav>
   );
 };
