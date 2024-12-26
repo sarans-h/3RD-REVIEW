@@ -7,14 +7,13 @@ import { HeroHighlight, Highlight } from "../components/ui/hero-highlight";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { Toaster,toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, loginUser, registerUser } from "../features/userSlice";
 
-const LogSig = ({isAuthenticated,setIsAuthenticated}) => {
+const LogSig = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    if (isAuthenticated) {
-        navigate("/");
-    }
-  }, [isAuthenticated]);
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,8 +22,19 @@ const LogSig = ({isAuthenticated,setIsAuthenticated}) => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [erro, seterro] = useState("");
+  const {error,loading,isAuthenticated}=useSelector((state)=>state.user)
+    useEffect(() => {
+        if(error){
+            toast.error(error);
+            dispatch(clearErrors());
+        }
+        if (isAuthenticated) {
+            toast.success("Logged in successfully");
+            navigate("/");
+        }
 
+    }, [error,loading,isAuthenticated]);
   const location = useLocation();
   const isLogin = location.pathname.includes("/login");
 
@@ -35,48 +45,32 @@ const LogSig = ({isAuthenticated,setIsAuthenticated}) => {
         if(!isLogin)
       {if (name === "password" || name === "confirmPassword") {
         if (formData.confirmPassword && value !== formData.password) {
-          setError("Password and Confirm Password does not match");
+          seterro("Password and Confirm Password does not match");
         } else {
-          setError("");
+          seterro("");
         }
       }}
     },
     [formData.password, formData.confirmPassword]
   );
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
    
-    setError("");
+    seterro("");
     // console.log("Form Data Submitted:", formData);
     if(!isLogin){
         if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match");
+            seterro("Passwords do not match");
             return;
           }
-        const data = axios
-      .post("/api/auth/signup", formData)
-      .then((res) => {
-        toast.success(res.data);
-        // console.log(res.data);
-
-        navigate("/login");
-      })
-      .catch((err) =>{
-        toast.error(err.response.data.message);});
+        //   console.log("registering")
+        dispatch(registerUser(formData));
 
     }
     else{
-        const data = axios
-      .post("/api/auth/signin", formData)
-      .then((res) => {
-        setIsAuthenticated(true);
-        toast.success("Login Successful");
-        // console.log(res.data);
-        navigate("/");
-      })
-      .catch((err) =>{
-        toast.error(err.response.data.message);});
+        dispatch(loginUser(formData));
     }
     
 
@@ -246,7 +240,7 @@ const LogSig = ({isAuthenticated,setIsAuthenticated}) => {
             </div>
 
             {/* Error Message */}
-            {error && <p className="text-red-500">{error}</p>}
+            {erro && <p className="text-red-500">{erro}</p>}
 
             {/* Submit Button */}
             <button

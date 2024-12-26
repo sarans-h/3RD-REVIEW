@@ -20,7 +20,12 @@ export const signup = async (req, res, next) => {
 
   try {
     await newUser.save();
-    res.json('Signup successful');
+    const token = jwt.sign({ id: newUser._id, isAdmin:newUser.isAdmin }, process.env.JWT_SECRET_KEY,);
+    const { password :pass, ...rest} = newUser._doc
+    res.status(201).cookie('access_token', token, {
+      // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
+      path: '/',
+    }).json({ message: 'Signup successful', user: newUser });
   } catch (error) {
     next(error);
   }
@@ -67,3 +72,14 @@ export const signout = (req, res, next) => {
     next(err);
   }
 };
+
+export const getUser = async (req, res, next) => {
+  try {
+    // console.log(req.user)
+    const user = await User.findById(req.user.id).select("-password");
+    console.log(user);
+    res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+}

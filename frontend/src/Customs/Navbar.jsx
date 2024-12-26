@@ -3,14 +3,13 @@ import { Link as ScrollLink } from "react-scroll";
 import { ChevronDown, Menu } from "lucide-react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Toaster,toast } from "react-hot-toast";
-const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
+import { logoutUser } from "../features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+const Navbar = ({ scrollToSection}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isop,setIsop]=useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const handleLogout = () => {
-    document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-    setIsAuthenticated(false);
-    toast.success("Logged Out Successfully");
-  };
+  const {user,isAuthenticated}=useSelector((state)=>state.user)
 
   const navigate=useNavigate();
   useEffect(() => {
@@ -21,6 +20,13 @@ const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const dispatch=useDispatch();
+  const handleLogout=()=>{
+    // console.log("logingout")
+    dispatch(logoutUser());
+    toast.success("Logged out successfully");
+    navigate("/");
+  }
 
   return (
     <nav
@@ -33,7 +39,7 @@ const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <button
-              onClick={() => scrollToSection("home")}
+              onClick={() => navigate("/") }
               className="text-2xl font-bold bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-center leading-none tracking-tighter text-transparent mb-4 hover:opacity-80 transition-opacity cursor-pointer"
             >
               Testimonials
@@ -43,24 +49,102 @@ const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-1">
             <button
-              onClick={() => scrollToSection("features")}
+              onClick={()=>{
+                if (window.location.pathname !== "/") {
+                  navigate("/");
+                  setTimeout(() => {
+                    scrollToSection("features");
+                    setIsop(false);
+                  }, 100);
+                } else {
+                  scrollToSection("features");
+                  setIsop(false);
+                }}
+              }
               className="relative text-gray-300 hover:text-white px-4 py-2 rounded-full transition-all duration-200 overflow-hidden group cursor-pointer"
             >
               Features
             </button>
             <button
-              onClick={() => scrollToSection("pricing")}
+              onClick={()=>{
+                if (window.location.pathname !== "/") {
+                  navigate("/");
+                  setTimeout(() => {
+                    scrollToSection("pricing");
+                    setIsop(false);
+                  }, 100);
+                } else {
+                  scrollToSection("pricing");
+                  setIsop(false);
+                }}
+              }
               className="relative text-gray-300 hover:text-white px-4 py-2 rounded-full transition-all duration-200 overflow-hidden group cursor-pointer"
             >
               Pricing
             </button>
             <button
-              onClick={() => scrollToSection("contact")}
+              onClick={()=>{
+                if (window.location.pathname !== "/") {
+                  navigate("/");
+                  setTimeout(() => {
+                    scrollToSection("contact");
+                    setIsop(false);
+                  }, 100);
+                } else {
+                  scrollToSection("contact");
+                  setIsop(false);
+                }}
+              }
               className="relative text-gray-300 hover:text-white px-4 py-2 rounded-full transition-all duration-200 overflow-hidden group cursor-pointer"
             >
               Contact
             </button>
-            {isAuthenticated?<button onClick={()=>{handleLogout()}} className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>:
+            {isAuthenticated?
+            
+            
+            //  <button  className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>
+            <div className="relative">
+            <img
+              src="https://placehold.co/150x150.png"
+              alt="Profile"
+              className="w-8 h-8 rounded-full cursor-pointer"
+              onClick={() => setIsop(!isop)}
+            />
+            {isop && (
+              <div className="absolute right-0 mt-2 w-48 backdrop-blur-xl transform transition-all duration-200 origin-top-right">
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsop(false);
+                  }}
+                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                >
+                  {user?.name}
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/settings");
+                    setIsop(false);
+                  }}
+                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                >
+                  Settings
+                </button>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsop(false);
+                  }}
+                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                >
+                  LogOut
+                </button>
+              </div>
+            )}
+          </div>  
+
+            :
             
             <button className="bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent" onClick={()=>navigate("/login")} >
               Login/Signup
@@ -79,34 +163,65 @@ const Navbar = ({ scrollToSection,isAuthenticated,setIsAuthenticated }) => {
             {isOpen && (
               <div className="absolute right-0 mt-2 w-48 backdrop-blur-xl transform transition-all duration-200 origin-top-right">
                 <button
-                  onClick={() => {
-                    scrollToSection("features");
-                    setIsOpen(false);
-                  }}
+                  onClick={()=>{
+                    if (window.location.pathname !== "/") {
+                      navigate("/");
+                      setIsOpen(false);
+                      setTimeout(() => {
+                        scrollToSection("features");
+                      }, 100);
+                    } else {
+                      scrollToSection("features");
+                      setIsOpen(false);
+                    }}
+                  }
                   className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Features
                 </button>
                 <button
-                  onClick={() => {
-                    scrollToSection("pricing");
-                    setIsOpen(false);
-                  }}
+                  onClick={()=>{
+                    if (window.location.pathname !== "/") {
+                      navigate("/");
+                      setIsOpen(false);
+                      setTimeout(() => {
+                        scrollToSection("pricing");
+                      }, 100);
+                    } else {
+                      scrollToSection("pricing");
+                      setIsOpen(false);
+                    }}
+                  }
                   className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Pricing
                 </button>
                 <button
-                  onClick={() => {
+                 onClick={()=>{
+                  if (window.location.pathname !== "/") {
+                    navigate("/");
+                    setIsOpen(false);
+                    setTimeout(() => {
+                      scrollToSection("contact");
+                    }, 100);
+                  } else {
                     scrollToSection("contact");
                     setIsOpen(false);
                   }}
+                }
                   className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Contact
                 </button>
+                
+                
+                <button onClick={()=>{handleLogout()}} className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>
+                
+                
+
               </div>
-            )}
+            )
+            }
           </div>
         </div>
       </div>

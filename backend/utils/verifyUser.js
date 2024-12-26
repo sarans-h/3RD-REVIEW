@@ -8,14 +8,14 @@ export const verifyToken = (req, res, next) => {
 //   console.log('Token:', token); 
 
   if(!token) {
-    return next(errorHandler(401, 'Unauthorized: No token provided'));
+    return next(errorHandler(401, 'Unauthorized : Please login'));
   }
 
   // Verify the token
   jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) {
     //   console.error('JWT Verification Error:', err); 
-      return next(errorHandler(401, 'Unauthorized: Token verification failed'));
+      return next(errorHandler(401, 'Unauthorized : Please login'));
     }
     req.user = user;
     // console.log('token verified')
