@@ -6,6 +6,14 @@ const businessSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
     productId: [
       {
         type: mongoose.Schema.Types.ObjectId,
