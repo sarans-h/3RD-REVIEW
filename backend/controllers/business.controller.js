@@ -70,3 +70,22 @@ export const myBusiness = async (req,res,next) => {
         next(err);
     }
 }
+// get bsiness by id
+
+export const business = async (req, res, next) => {
+    const businessId = req.headers['businessid'];
+
+    if (!businessId) {
+        return next(errorHandler(400, "Business ID is required"));
+    }
+    try {
+        const business = await Business.findById(businessId);
+
+        if (!business) {
+            return next(errorHandler(404, "Business not found"));
+        }
+        res.status(200).json(business);
+    } catch (err) {
+        next(err);
+    }
+}

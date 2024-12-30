@@ -36,8 +36,17 @@ const businessSlice = createSlice({
             state.bLoading=false;
             state.berror=action.payload;
         },
-        
-
+        getBusinessRequest: (state) => {
+            state.bLoading = true;
+        },
+        getBusinessSuccess: (state, action) => {
+            state.bLoading = false;
+            state.business = action.payload;
+        },
+        getBusinessFail: (state, action) => {
+            state.bLoading = false;
+            state.berror = action.payload;
+        },
         clearberrors: (state) => {
             state.berror = null;
         }
@@ -51,6 +60,9 @@ export const {
     loadMyBusinessRequest,
     loadMyBusinessSuccess,
     loadMyBusinessFail,
+    getBusinessRequest,
+    getBusinessSuccess,
+    getBusinessFail,
     clearberrors } = businessSlice.actions;
 
 export const addBusiness = (formData) => async (dispatch) => {
@@ -76,6 +88,21 @@ export const myBusiness = () => async (dispatch) => {
         dispatch(loadMyBusinessFail(error.response.data.message));
     }
 };
+export const getBusiness = (businessId) => async (dispatch) => {
+    try {
+        dispatch(getBusinessRequest());
+        const {data}=await axios.get(`/api/business/getbusiness`, {
+            headers: {
+              'businessId': businessId, 
+            },
+          });
+        dispatch(getBusinessSuccess(data));
+    }
+    catch (error) {
+        console.log(error);
+        dispatch(getBusinessFail(error.response.data.message));
+    }
+}
 
 
 
