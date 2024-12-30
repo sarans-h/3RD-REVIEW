@@ -32,28 +32,40 @@ const MyBusiness = ({ setLinks, getIconColor, setActiveComponent }) => {
       <div className="grid grid-cols-4 gap-6 mt-10 px-16 w-full cursor-pointer">
         {businesss.map((business) => {
           const RandomIcon = getRandomIcon();
+          const compKey = `Business_${business._id}`;
+          
           return (
             <div
               key={business._id}
               className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
               onClick={() => {
-                const compKey = `Business_${business._id}`;
-                setLinks((prevLinks) => [
-                  ...prevLinks,
-                  {
-                    label: compKey,
-                    href: "#",
-                    icon: (
-                      <RandomIcon
-                        className={`h-5 w-5 flex-shrink-0 ${getIconColor(
-                          business.name
-                        )}`}
-                      />
-                    ),
-                    component: compKey,
-                    id: business._id,
-                  },
-                ]);
+                setLinks((prevLinks) => {
+                  // Check if this business already exists in links
+                  const existingLink = prevLinks.find(link => link.component === compKey);
+                  if (existingLink) {
+                    // If it exists, just switch to it without adding a new link
+                    setActiveComponent(compKey);
+                    return prevLinks;
+                  }
+
+                  // If it doesn't exist, add it
+                  return [
+                    ...prevLinks,
+                    {
+                      label: compKey,
+                      href: "#",
+                      icon: (
+                        <RandomIcon
+                          className={`h-5 w-5 flex-shrink-0 ${getIconColor(business.name)}`}
+                        />
+                      ),
+                      component: compKey,
+                      id: business._id,
+                    },
+                  ];
+                });
+
+                // Always switch to the component
                 setActiveComponent(compKey);
               }}
             >
