@@ -1,121 +1,150 @@
-// "use client";
-import React, { useState, useCallback, useMemo } from "react";
-// import Room from '../components/room'
-import Profile from './Profile.jsx'
-import AddBusiness from './AddBusiness.jsx'
-import MyBusiness from './MyBusiness.jsx'
+import React, { useState, useCallback, useEffect } from "react";
+import Profile from './Profile.jsx';
+import AddBusiness from './AddBusiness.jsx';
+import MyBusiness from './MyBusiness.jsx';
+import Business from "./Business.jsx";
 import { Sidebar, SidebarBody, SidebarLink } from "../components/ui/sidebar";
 import {
-    ArrowLeft,
-    ArrowLeftCircle,
-    BriefcaseBusiness,
-    Plus,
-    Settings,
     User,
+    Plus,
+    BriefcaseBusiness,
+    Building2
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
-// Define links outside the component to prevent re-creation on each render
-
-
-// Memoize Logo component
-// const MemoizedLogo = React.memo(Logo);
-
 const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState("Profile");
     const [open, setOpen] = useState(false);
-    const links = [
-        {
-            label: "Profile",
-            href: "#",
-            icon: (
-                <User className={`h-5 w-5 flex-shrink-0 ${activeComponent === "Profile" ? "text-white" : "text-neutral-700 dark:text-neutral-200"}`} />
-            ),
-            component: "Profile",
-        },
-        {
-            label: "Add Bussiness",
-            href: "#",
-            icon: (
-                <Plus className={`h-5 w-5 flex-shrink-0 ${activeComponent === "Add Business" ? "text-white" : "text-neutral-700 dark:text-neutral-200"}`} />
-            ),
-            component: "Add Business",
-        },
-        {
-            label: "My Business",
-            href: "#",
-            icon: (
-                <BriefcaseBusiness className={`h-5 w-5 flex-shrink-0 ${activeComponent === "My Business" ? "text-white" : "text-neutral-700 dark:text-neutral-200"}`} />
-            ),
-            component: "My Business",
-        }
-    ];
+    const [componentMap, setComponentMap] = useState({
+        "Profile": Profile,
+        "Add Business": AddBusiness,
+        "My Business": (props) => <MyBusiness {...props} />,
+        "Business": (props) => <Business {...props} />,
+    });
 
-    // Memoize the handler to set active component
+    const getIconColor = (componentName) => {
+        return activeComponent === componentName ? "text-white" : "text-neutral-700 ";
+    };
+
+    const createIcon = (component) => {
+        switch (component) {
+            case "Profile":
+                return <User className={`h-5 w-5 flex-shrink-0 ${getIconColor("Profile")}`} />;
+            case "Add Business":
+                return <Plus className={`h-5 w-5 flex-shrink-0 ${getIconColor("Add Business")}`} />;
+            case "My Business":
+                return <BriefcaseBusiness className={`h-5 w-5 flex-shrink-0 ${getIconColor("My Business")}`} />;
+            default:
+                return <Building2 className={`h-5 w-5 flex-shrink-0 ${getIconColor(component)}`} />;
+        }
+    };
+
+    const loadLinksFromLocalStorage = () => {
+        const storedLinks = localStorage.getItem("sidebarLinks");
+        if (storedLinks) {
+            const parsedLinks = JSON.parse(storedLinks);
+            return parsedLinks.map(link => ({
+                ...link,
+                icon: createIcon(link.component)
+            }));
+        }
+        return [
+            {
+                label: "Profile",
+                href: "#",
+                icon: createIcon("Profile"),
+                component: "Profile",
+            },
+            {
+                label: "Add Business",
+                href: "#",
+                icon: createIcon("Add Business"),
+                component: "Add Business",
+            },
+            {
+                label: "My Business",
+                href: "#",
+                icon: createIcon("My Business"),
+                component: "My Business",
+            }
+        ];
+    };
+
+    const [links, setLinks] = useState(loadLinksFromLocalStorage);
+
+    useEffect(() => {
+        const linksToStore = links.map(link => ({
+            label: link.label,
+            href: link.href,
+            component: link.component,
+            id: link.id,
+        }));
+        localStorage.setItem("sidebarLinks", JSON.stringify(linksToStore));
+    }, [links]);
+
+    useEffect(() => {
+        setLinks(prevLinks => 
+            prevLinks.map(link => ({
+                ...link,
+                icon: React.cloneElement(link.icon, {
+                    className: `h-5 w-5 flex-shrink-0 ${getIconColor(link.component)}`
+                })
+            }))
+        );
+    }, [activeComponent]);
+
     const handleSetActiveComponent = useCallback((component) => {
         setActiveComponent(component);
     }, []);
 
-    // Handler for adding a room
-
-
-    // Memoize renderComponent to prevent re-definition on each render
     const renderComponent = useCallback(() => {
-        switch (activeComponent) {
-            case "Add Business":
-                return <AddBusiness />;
-            case "Profile":
-                return <Profile />; // Pass the handler here
-            case "My Business":
-                return <MyBusiness />;
-            // case "Analytics":
-            //     return <Analytics />;
-            // case "Logout":
-            //     return <Logout />;
-            default:
-                return <Profile />;
+        if (activeComponent.startsWith("Business_")) {
+            const bizId = activeComponent.split("Business_")[1];
+            return <Business id={bizId} setActiveComponent={setActiveComponent} setLinks={setLinks} />;
         }
-    }, [activeComponent]);
+        const link = links.find((item) => item.component === activeComponent);
+        const Component = componentMap[activeComponent];
+        return Component ? (
+            <Component
+                setLinks={setLinks}
+                getIconColor={getIconColor}
+                setActiveComponent={setActiveComponent}
+            />
+        ) : (
+            <Profile />
+        );
+    }, [activeComponent, links, componentMap]);
 
     return (
-        <div
-            className={cn(
-                " flex flex-col md:flex-row bg-gray-100   flex-1 w-full   overflow-hidden",
-                "h-[100vh]"
-            )}
-        >
+        <div className={cn("flex flex-col md:flex-row bg-gray-100 flex-1 w-full overflow-hidden", "h-[100vh]")}>
             <Sidebar open={open} setOpen={setOpen}>
                 <SidebarBody className="justify-between gap-10 bg-black">
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                        {/* <MemoizedLogo /> */}
-                        <Logo/>
+                        <Logo />
                         <div className="mt-8 flex flex-col gap-2">
                             {links.map((link, idx) => (
                                 <SidebarLink
                                     key={idx}
                                     link={link}
-                                   className={activeComponent === link.component ? "items-start text-red-700  " : ""}
-                                                                       onClick={() => handleSetActiveComponent(link.component)}
+                                    className={cn(
+                                        "items-start",
+                                        activeComponent === link.component ? "text-red-700" : ""
+                                    )}
+                                    onClick={() => handleSetActiveComponent(link.component)}
                                 />
                             ))}
                         </div>
                     </div>
-                    <div>
-
-                    </div>
                 </SidebarBody>
             </Sidebar>
-            {/* Render the active component */}
-            <div className="flex flex-col flex-1 ">{renderComponent()}</div>
+            <div className="flex flex-col flex-1">{renderComponent()}</div>
         </div>
     );
 }
 
 export default Dashboard;
-
-
 
 export const Logo = () => {
     return (
@@ -148,12 +177,3 @@ export const LogoIcon = () => {
         </Link>
     );
 };
-// import React from 'react'
-
-// const Dashboard = () => {
-//   return (
-//     <div>Dashboard</div>
-//   )
-// }
-
-// export default Dashboard
