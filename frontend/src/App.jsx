@@ -1,15 +1,60 @@
-import Globe from "./components/ui/globe";
-function App() {
-  return (
-<div className="relative flex size-full w-full h-[100vh] items-center justify-center overflow-hidden rounded-lg border bg-background px-40 pb-40 pt-8 md:pb-60 md:shadow-xl">
-      <span className=" pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
-        Globe
-      </span>
-      <Globe className="top-56" />
-      <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
-    </div>
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useRef, useEffect } from "react";
+import Home from "./Pages/Home";
+import Navbar from "./Customs/Navbar";
+import Footer from "./Pages/Footer";
+import LogSig from "./Pages/LogSig";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./features/userSlice";
+import ProtectedRoute from "./Customs/ProtectedRoute";
+import Dashboard from "./Pages/Dashboard";
 
-    
+function App() {
+  // Refs for scrollable sections
+  const sectionsRef = {
+    features: useRef(null),
+    pricing: useRef(null),
+    contact: useRef(null),
+  };
+
+  const scrollToSection = (section) => {
+    sectionsRef[section]?.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    if (currentPath !== "/login" && currentPath !== "/signin") {
+      dispatch(loadUser());
+    }
+  }, [dispatch]);
+
+  return (
+    <BrowserRouter>
+      <AppContent sectionsRef={sectionsRef} scrollToSection={scrollToSection} />
+    </BrowserRouter>
+  );
+}
+
+function AppContent({ sectionsRef, scrollToSection }) {
+  const location = useLocation(); // Get the current location inside the Router context
+
+  // Check if the current path is "/dashboard"
+  const isDashboardRoute = location.pathname === "/dashboard";
+
+  return (
+    <>
+      {!isDashboardRoute && <Navbar scrollToSection={scrollToSection} />}
+      <Routes>
+        <Route path="/" element={<Home sectionsRef={sectionsRef} />} />
+        <Route path="/login" element={<LogSig />} />
+        <Route path="/signin" element={<LogSig />} />
+        <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+      </Routes>
+      {!isDashboardRoute && <Footer />}
+    </>
   );
 }
 
