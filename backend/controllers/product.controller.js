@@ -18,7 +18,7 @@ export const createProduct = async (req,res,next) => {
     }
     const {productUrl,productName,description}=req.body;
     if(!productName||!productUrl){
-        return next(errorHandler(400, "Product name and URL are required"));
+        return next(errorHandler(400, "Product name and URL are required")); 
     }
     try{
         const product = await Product.create({businessId:businessid,productName,productUrl,description});
@@ -29,7 +29,7 @@ export const createProduct = async (req,res,next) => {
         const business=await Business.findById(businessid);
         business.productId.push(product._id);
         await business.save();
-        res.status(201).json({success:true,product});
+        res.status(201).json({success:true});
     }catch(err){
         next(err);
     }
@@ -56,6 +56,30 @@ export const deleteProduct = async (req,res,next) => {
         await business.save();
         res.status(200).json({success:true});
     }catch(err){
+        next(err);
+    }
+}
+// getmyproducts
+export const getMyProducts = async (req,res,next) => {
+    console.log("getMyProducts");
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) {
+        return next(errorHandler(404, "User not found"));
+    }
+    const { businessid } = req.params;
+    if (!user.businessIds.includes(businessid)) {
+        return next(errorHandler(403, "Business ID not associated with user"));
+    }
+    try{
+        const business = await Business.findById(businessid);
+        if(!business){
+            return next(errorHandler(404, "Business not found"));
+        }
+        const products = await Product.find({businessId:businessid});
+        res.status(200).json(products);
+    }
+    catch(err){
         next(err);
     }
 }
