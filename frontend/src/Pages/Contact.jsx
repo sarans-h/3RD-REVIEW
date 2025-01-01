@@ -1,79 +1,129 @@
-import React from "react";
-import Lottie from "lottie-react";
-import animationData from "../assets/singing-contract.json"; // Update with the correct path to your animation file
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
+import { HeroHighlight, Highlight } from "../components/ui/hero-highlight";
+import { motion } from "framer-motion";
+import { Toaster, toast } from 'react-hot-toast';
 
 const Contact = () => {
+
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-[#040405] p-6 px-12 gap-8">
-      {/* Lottie Animation Section */}
-      <div className="w-full md:w-1/2 flex justify-center">
-        <div className="w-72 md:w-96">
-          <Lottie animationData={animationData} loop={true} />
-        </div>
+    <div className="bg-black">
+      <div className="h-auto flex flex-col lg:flex-row items-center justify-center bg-black text-white px-4">
+        {/* Left Side: Highlight and Additional Content */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
+          className="lg:w-1/2 w-full h-auto mt-20 flex flex-col space-y-6 text-center lg:text-left lg:pr-10 "
+        >
+          <HeroHighlight>
+            <h1 className="text-3xl md:text-5xl font-bold leading-relaxed">
+              Welcome,
+              <span className="block pt-7">
+                to{"  "}
+                <Highlight className="text-black dark:text-white">
+                  TESTIMONIALS
+                </Highlight>
+              </span>
+            </h1>
+
+            <p className="text-gray-400 text-sm lg:text-base max-w-lg mx-auto  pt-20 lg:mx-0">
+              Whether you have questions, ideas to share, or just want to say
+              hello, we&apos;re here to listen. Fill out the form, and
+              we&apos;ll get back to you soon. Together, let&apos;s make
+              something amazing.
+            </p>
+            <p className="text-gray-400 text-sm lg:text-base max-w-lg mx-auto lg:mx-0">
+              Need immediate assistance? Reach us at{" "}
+              <span className="font-bold text-white">support@example.com</span>{" "}
+              or call us at{" "}
+              <span className="font-bold text-white">+91 222222222</span>.
+            </p>
+          </HeroHighlight>
+        </motion.div>
+
+        {/* Right Side: Contact Form */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
+          className="lg:w-1/2 w-full bg-black p-8 rounded-md shadow-lg mt-10 lg:mt-0"
+        >
+          <h2 className="font-bold text-3xl mb-4 text-center lg:text-left inline-block">
+            Contact Us
+          </h2>
+          <form  className="space-y-6">
+            <div className="flex flex-wrap gap-6">
+              {/* Name */}
+              <div className="flex-1">
+                <Label htmlFor="name" className="text-gray-300">
+                  Your Name
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  placeholder="John Doe"
+                  type="text"
+                  required
+           
+                  className="bg-[#1b15156e] text-white border border-gray-600"
+                />
+              </div>
+
+              {/* Email */}
+              <div className="flex-1">
+                <Label htmlFor="email" className="text-gray-300">
+                  Your Email
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  type="email"
+                  required
+
+                  className="bg-[#1b15156e] text-white border border-gray-600"
+                 
+                />
+              </div>
+            </div>
+
+            {/* Message */}
+            <div>
+              <Label htmlFor="message" className="text-gray-300">
+                Message
+              </Label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Your message"
+                required
+                
+                className="w-full bg-[#1b15156e] text-white px-3 py-2 border rounded-md"
+                rows="4"
+              ></textarea>
+            </div>
+
+            {/* Error Message */}
+
+            {/* Submit Button */}
+            <button
+
+              className="w-full bg-white text-black py-2 rounded-md hover:bg-gray-200 transition-colors"
+            >
+              Send Message
+            </button>
+          </form>
+        </motion.div>
       </div>
-
-      {/* Contact Form Section */}
-      <div className="w-full md:w-1/2">
-        <h1 className="text-4xl font-bold text-white bg-[#040405] text-center py-4">
-          Contact Us
-        </h1>
-        <p className="text-gray-400 text-center mb-8">
-          Have questions or want to get in touch? We’d love to hear from you!
-        </p>
-
-        <form className="bg-[#040405] p-6 rounded-lg shadow-md">
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-gray-700 text-sm font-semibold mb-2"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full bg-[#040405] text-white px-3 py-2 border rounded-md"
-              placeholder="Enter your name"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 text-sm font-semibold mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full bg-[#040405] text-white px-3 py-2 border rounded-md"
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="message"
-              className="block text-gray-700 text-sm font-semibold mb-2"
-            >
-              Message
-            </label>
-            <textarea
-              id="message"
-              className="w-full bg-[#040405] text-white px-3 py-2 border rounded-md "
-              rows="4"
-              placeholder="Your message"
-            ></textarea>
-          </div>
-          <div className="flex justify-center w-full">
-          <button className="relative ml-4 bg-gradient-to-r from-pink-500 via-red-500 to-orange-500 text-white px-6 py-2 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-pink-500/25 hover:scale-105 active:scale-95">
-
-            Send Message
-          </button>
-          </div>
-        </form>
-      </div>
+      <Toaster toastOptions={{
+        className: '',
+        style: {
+          background: 'black',
+          color: 'white',
+          border: '1px solid white',
+        },
+      }} />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import { addBusiness, clearberrors } from "../features/businessSlice";
+import { addBusiness, clearberrors, clearBusiness } from "../features/businessSlice";
 
 function AddBusiness() {
     const navigate = useNavigate();
@@ -17,6 +17,8 @@ function AddBusiness() {
         
         if(business.success){
             toast.success("Business added successfully");
+        dispatch(clearBusiness())    
+
         }
         if (berror) {
             toast.error(berror);
@@ -46,8 +48,13 @@ function AddBusiness() {
         data.append("domain", formData.domain);
         data.append("description", formData.description);
         data.append("image", formData.image);
-        dispatch(addBusiness(data));        
-        
+        dispatch(addBusiness(data));    
+        setFormData({
+            name: "",
+            domain: "",
+            description: "",
+            image: null,
+        }); 
     };
 
     return (

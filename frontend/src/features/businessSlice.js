@@ -47,6 +47,11 @@ const businessSlice = createSlice({
             state.bLoading = false;
             state.berror = action.payload;
         },
+        clearBusiness: (state) => {
+            state.business = {};
+            state.bLoading = false;
+            state.berror = null;
+        },
         clearberrors: (state) => {
             state.berror = null;
         }
@@ -63,6 +68,7 @@ export const {
     getBusinessRequest,
     getBusinessSuccess,
     getBusinessFail,
+    clearBusiness,
     clearberrors } = businessSlice.actions;
 
 export const addBusiness = (formData) => async (dispatch) => {

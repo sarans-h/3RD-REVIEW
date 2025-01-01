@@ -77,7 +77,7 @@ return (
                         </thead>
                         <tbody className='gap-14'>
                             {businesss?.map((business) => (
-                                <tr className="bg-white/5 backdrop-blur-sm rounded-xl mb-8">
+                                <tr key={business._id} className="bg-white/5 backdrop-blur-sm rounded-xl mb-8">
                                 <td className="border px-4 py-2 border-transparent rounded-l-xl">{business.name}</td>
                                 <td className="border px-4 py-2 border-transparent ">{business.domain}</td>
                                 <td className="border px-4 py-2 border-transparent rounded-r-xl">{business.productId.length}</td>

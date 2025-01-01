@@ -1,37 +1,49 @@
 import React, { useEffect } from "react";
 import { getBusiness } from "../features/businessSlice";
-import {useDispatch, useSelector} from "react-redux";
-import { Toaster,toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { Toaster, toast } from "react-hot-toast";
 import { HeroHighlight, Highlight } from "../components/ui/hero-highlight";
 import { CrossIcon, X } from "lucide-react";
 import { AddProductModal } from "../components/AddProductModal";
 import { getProducts } from "../features/productSlice";
+import { useNavigate } from "react-router-dom";
 
 const Business = ({ id, setActiveComponent, setLinks }) => {
+  const navigate = useNavigate();
+
   const handleClose = () => {
     setLinks((prevLinks) => prevLinks.filter(link => link.id !== id));
     setActiveComponent("My Business");
   };
-  const {business,berror,bLoading}=useSelector(state=>state.business);
 
-  const dispatch=useDispatch();
-  const{pLoading,perror,products,product}=useSelector(state=>state.product);
-  useEffect(()=>{
-    if(berror){
+  const { business, berror, bLoading } = useSelector(state => state.business);
+  const dispatch = useDispatch();
+  const { pLoading, perror, products, product } = useSelector(state => state.product);
+
+  useEffect(() => {
+    if (berror) {
       toast.error(berror);
     }
-  },[berror,business,bLoading]);
+  }, [berror, business, bLoading]);
+
   useEffect(() => {
     dispatch(getBusiness(id));
   }, [dispatch, id]);
+
   useEffect(() => {
     if (perror) {
       toast.error(perror);
     }
   }, [perror, products, pLoading]);
+
   useEffect(() => {
     dispatch(getProducts(id));
   }, [dispatch, id]);
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <div className="bg-black h-[100vh] w-[96vw]">
       <div className="p-4">
@@ -57,16 +69,27 @@ const Business = ({ id, setActiveComponent, setLinks }) => {
       </div>
 
       <div className="overflow-y-scroll h-[63vh] mb-9 ">
+        <style>
+          {`
+            div::-webkit-scrollbar {
+              display: none; /* For Chrome, Safari, and Opera */
+            }
+          `}
+        </style>
         {products.length === 0 ? (
           <p className="text-white p-4">No products Added</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
             {products?.map((product) => (
-              <div key={product.id} className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:-translate-y-1">
-              <h3 className="text-xl font-semibold text-white mb-2">{product.productName}</h3>
-              <p className="text-gray-400"><strong>Description:</strong> {product.description}</p>
-              <p className="text-gray-400"><strong>Url:</strong> {product.productUrl}</p>
-            </div>
+              <div
+                key={product.id}
+                className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:-translate-y-1 cursor-pointer"
+                onClick={() => handleProductClick(product._id)}
+              >
+                <h3 className="text-xl font-semibold text-white mb-2">{product.productName}</h3>
+                <p className="text-gray-400"><strong>Description:</strong> {product.description}</p>
+                <p className="text-gray-400"><strong>Url:</strong> {product.productUrl}</p>
+              </div>
             ))}
           </div>
         )}
@@ -83,17 +106,16 @@ const Business = ({ id, setActiveComponent, setLinks }) => {
       }} />
     </div>
   );
-
-
 };
+
 const BusinessCard = ({ business }) => {
   return (
     <div className="bg-white/5 text-white p-4 rounded-lg shadow-md m-4 w-[30vw]">
       <h2 className="text-xl font-bold">{business?.name}</h2>
-  
       <p><strong>Desc:</strong> {business?.description}</p>
       <p><strong>Domain:</strong> {business?.domain}</p>
     </div>
   );
 };
+
 export default Business;
