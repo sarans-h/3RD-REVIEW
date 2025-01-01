@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { loadUser } from "./features/userSlice";
 import ProtectedRoute from "./Customs/ProtectedRoute";
 import Dashboard from "./Pages/Dashboard";
+import Product from "./Pages/Product";
+import Form from "./Pages/Form";
 
 function App() {
   // Refs for scrollable sections
@@ -41,19 +43,22 @@ function App() {
 function AppContent({ sectionsRef, scrollToSection }) {
   const location = useLocation(); // Get the current location inside the Router context
 
-  // Check if the current path is "/dashboard"
+  // Check if the current path is "/dashboard" or "/:productid"
   const isDashboardRoute = location.pathname === "/dashboard";
+  const isProductRoute = /^\/[^/]+$/.test(location.pathname);
 
   return (
     <>
-      {!isDashboardRoute && <Navbar scrollToSection={scrollToSection} />}
+      {!isDashboardRoute && !isProductRoute && <Navbar scrollToSection={scrollToSection} />}
       <Routes>
         <Route path="/" element={<Home sectionsRef={sectionsRef} />} />
+        <Route path="/:productid" element={<Form />} />
         <Route path="/login" element={<LogSig />} />
         <Route path="/signin" element={<LogSig />} />
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+        <Route path="/product/:productid" element={<Product />} />
       </Routes>
-      {!isDashboardRoute && <Footer />}
+      {!isDashboardRoute && !isProductRoute && <Footer />}
     </>
   );
 }

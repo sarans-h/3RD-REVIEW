@@ -33,6 +33,17 @@ const productSlice = createSlice({
             state.pLoading = false;
             state.perror = action.payload;
         },
+        getProductDetailsRequest: (state) => {
+            state.pLoading = true;
+        },
+        getProductDetailsSuccess: (state, action) => {
+            state.pLoading = false;
+            state.product = action.payload;
+        },
+        getProductDetailsFail: (state, action) => {
+            state.pLoading = false;
+            state.perror = action.payload;
+        },
         clearperrors: (state) => {
             state.perror = null;
         }
@@ -45,6 +56,9 @@ export const {
     getProductsRequest,
     getProductsSuccess,
     getProductsFail,
+    getProductDetailsRequest,
+    getProductDetailsSuccess,
+    getProductDetailsFail,
     clearperrors
 } = productSlice.actions;
 
@@ -69,11 +83,20 @@ export const getProducts = (businessid) => async (dispatch) => {
         dispatch(getProductsSuccess(data));
     }
     catch (error) {
-        console.log(error);
+        // console.log(error);
         dispatch(getProductsFail(error.response.data.message));
     }
 }
 
-
+export const productDetails=(productid)=>async(dispatch)=>{
+    try{
+        dispatch(getProductDetailsRequest());
+        const { data } = await axios.get(`/api/product/${productid}`);
+        dispatch(getProductDetailsSuccess(data));
+    }
+    catch(error){
+        dispatch(getProductDetailsFail(error.response.data.message));
+    }
+}
 
 export default productSlice.reducer;
