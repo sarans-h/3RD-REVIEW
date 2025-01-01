@@ -29,14 +29,7 @@ const MyBusiness = ({ setLinks, getIconColor, setActiveComponent }) => {
       <p className="text-xl text-white p-7 ">
         Select Businness To View Added Products
       </p>
-      <div className="grid grid-cols-4 gap-6 mt-10 px-16 w-full cursor-pointer h-[71vh] overflow-y-scroll">
-      <style>
-                {`
-                    div::-webkit-scrollbar {
-                        display: none; /* For Chrome, Safari, and Opera */
-                    }
-                `}
-            </style>
+      <div className="grid grid-cols-4 gap-6 mt-10 px-16 w-full cursor-pointer">
         {businesss.map((business) => {
           const RandomIcon = getRandomIcon();
           const compKey = `Business_${business._id}`;

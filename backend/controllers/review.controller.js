@@ -37,6 +37,7 @@ export const createReview = async (req, res, next) => {
         await product.save();
         res.status(201).json({ success: true, review });
     } catch (err) {
+        console.log(err)
         next(errorHandler(500, "An error occurred while creating the review."));
     }
 };
