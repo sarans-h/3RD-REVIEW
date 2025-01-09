@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { productDetails } from "../features/productSlice";
 import { Toaster, toast } from "react-hot-toast";
+import axios from "axios";
 
 const Form = () => {
   const { productid } = useParams();
@@ -11,7 +12,6 @@ const Form = () => {
 
   const [customerName, setCustomerName] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
-  const [stars, setStars] = useState(0);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
@@ -20,7 +20,7 @@ const Form = () => {
    
   };
   const maxStars = 5;
-
+  const navigate=useNavigate();
   useEffect(() => {
     dispatch(productDetails(productid));
   }, [dispatch, productid]);
@@ -31,15 +31,30 @@ const Form = () => {
     }
   }, [perror]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      customerName,
-      customerEmail,
-      rating,
-      comment,
-    });
-  };
+    const review = {
+        stars: rating,
+        comment,
+        customerName,
+        customerEmail,
+    };
+    try {
+        const { data } = await axios.post(`/api/review/${productid}/createreview`, review);
+        if (data.success) {
+            toast.success("Review added successfully");
+            setRating(0);
+            setComment("");
+            setCustomerName("");
+            setCustomerEmail("");
+            // navigate('/thankyou')
+        }
+    } catch (error) {
+        console.log(error);
+        toast.error("Failed to add review Try again later");
+    }
+};
+
 
   return (
     <div className="min-h-[100vh] bg-black text-white pb-16">
@@ -101,6 +116,7 @@ const Form = () => {
                     <input
                       type="text"
                       value={customerName}
+                      required
                       onChange={(e) => setCustomerName(e.target.value)}
                       className="px-3 py-2 w-full border border-transparent rounded-md bg-white/5 text-white pr-10"
                     />
@@ -112,6 +128,7 @@ const Form = () => {
                     </label>
                     <input
                       type="email"
+                      required
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
                       className="px-3 py-2 w-full border border-transparent rounded-md bg-white/5 text-white pr-10"
@@ -151,6 +168,7 @@ const Form = () => {
                     </label>
                     <textarea
                       value={comment}
+                        required
                       onChange={(e) => setComment(e.target.value)}
                       className="px-3 py-2 w-full border border-transparent rounded-md bg-white/5 text-white pr-10"
                     />

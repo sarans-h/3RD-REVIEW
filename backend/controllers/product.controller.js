@@ -85,11 +85,11 @@ export const getMyProducts = async (req,res,next) => {
 }
 // product details
 export const productDetails = async (req,res,next) => {
-    const userId = req.user.id;
-    const user = await User.findById(userId);
-    if (!user) {
-        return next(errorHandler(404, "User not found"));
-    }
+    // const userId = req.user.id;
+    // const user = await User.findById(userId);
+    // if (!user) {
+    //     return next(errorHandler(404, "User not found"));
+    // }
     const { productid } = req.params;
     try{
         const product = await Product.findById(productid).populate('reviewIds');  

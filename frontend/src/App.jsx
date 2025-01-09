@@ -10,6 +10,7 @@ import ProtectedRoute from "./Customs/ProtectedRoute";
 import Dashboard from "./Pages/Dashboard";
 import Product from "./Pages/Product";
 import Form from "./Pages/Form";
+import Embed1 from "./Embed/Embed1";
 
 function App() {
   // Refs for scrollable sections
@@ -46,10 +47,12 @@ function AppContent({ sectionsRef, scrollToSection }) {
   // Check if the current path is "/dashboard" or "/:productid"
   const isDashboardRoute = location.pathname === "/dashboard";
   const isProductRoute = /^\/[^/]+$/.test(location.pathname);
+  const isEmbedRoute = /^\/embed\/[^/]+$/.test(location.pathname);
+  const isEmbed1Route = /^\/embed\/[^/]+\/embed1$/.test(location.pathname);
 
   return (
     <>
-      {!isDashboardRoute && !isProductRoute && <Navbar scrollToSection={scrollToSection} />}
+      {!isDashboardRoute && !isProductRoute && !isEmbed1Route && <Navbar scrollToSection={scrollToSection} />}
       <Routes>
         <Route path="/" element={<Home sectionsRef={sectionsRef} />} />
         <Route path="/:productid" element={<Form />} />
@@ -57,8 +60,9 @@ function AppContent({ sectionsRef, scrollToSection }) {
         <Route path="/signin" element={<LogSig />} />
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/product/:productid" element={<Product />} />
+        <Route path="/embed/:productid/embed1" element={<Embed1 />} />
       </Routes>
-      {!isDashboardRoute && !isProductRoute && <Footer />}
+      {!isDashboardRoute && !isEmbed1Route && !isProductRoute && <Footer />}
     </>
   );
 }
