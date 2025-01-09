@@ -37,7 +37,7 @@ function LeftProfile() {
     return (
         <div className="bg-black text-white rounded-lg p-6 max-w-sm mx-auto">
             <img
-                src={profile.image} // Updated src
+                src={`https://ui-avatars.com/api/?name=${user?.name?.split(" ")[0]}&background=fff&color=000`}// Updated src
                 alt="Profile"
                 className="w-24 h-24 rounded-full mx-auto"
             />

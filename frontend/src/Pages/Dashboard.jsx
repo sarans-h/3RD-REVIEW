@@ -120,7 +120,13 @@ const Dashboard = () => {
     return (
         <div className={cn("flex flex-col md:flex-row bg-gray-100 flex-1 w-full overflow-hidden", "h-[100vh]")}>
             <Sidebar open={open} setOpen={setOpen}>
-                <SidebarBody className="justify-between gap-10 bg-black">
+                <SidebarBody className="justify-between gap-10 bg-black ">
+                    <button 
+                        className="md:hidden p-1 text-white absolute top-2 right-2" 
+                        onClick={() => setOpen(false)}
+                    >
+                        X
+                    </button>
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                         <Logo />
                         <div className="mt-8 flex flex-col gap-2">

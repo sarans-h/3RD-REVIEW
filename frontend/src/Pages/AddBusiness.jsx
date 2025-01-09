@@ -29,7 +29,6 @@ function AddBusiness() {
         name: "",
         domain: "",
         description: "",
-        image: null,
     });
 
     const handleInputChange = (e) => {
@@ -37,23 +36,18 @@ function AddBusiness() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleImageChange = (e) => {
-        setFormData((prev) => ({ ...prev, image: e.target.files[0] }));
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = new FormData();
-        data.append("name", formData.name);
-        data.append("domain", formData.domain);
-        data.append("description", formData.description);
-        data.append("image", formData.image);
+        const data = {
+            name: formData.name,
+            domain: formData.domain,
+            description: formData.description,
+        };
         dispatch(addBusiness(data));    
         setFormData({
             name: "",
             domain: "",
             description: "",
-            image: null,
         }); 
     };
 
@@ -101,17 +95,6 @@ function AddBusiness() {
                                 required
                             />
                         </div>
-                        <div>
-                            <Label htmlFor="image">Image</Label>
-                            <Input
-                                type="file"
-                                id="image"
-                                name="image"
-                                className="bg-white/5"
-                                onChange={handleImageChange}
-                                required
-                            />
-                        </div>
                         <div className="flex items-center w-full justify-center">
 
                         <button type="submit" className="bg-white text-black p-2 w-full rounded">Add Business</button>
@@ -131,12 +114,12 @@ function AddBusiness() {
                 <div className="h-[80vh] bg-black w-[40vw] p-4 text-white rounded-lg max-w-sm mx-auto">
                     <h2 className="text-xl">{formData.name||"Your Business"}</h2>
                     <div className="mt-4">
-                        {formData.image && (
-                            <img
-                                src={URL.createObjectURL(formData.image)}
-                                alt="Business"
-                                className=" h-[30vh] object-cover"
-                                
+                        {console.log(formData.domain)}
+                        {formData.domain && (
+                            <iframe
+                                src={`https://${formData.domain}`}
+                                title="Website Preview"
+                                className="w-full h-[30vh] border border-white/10 rounded-lg"
                             />
                         )}
                         <div className="mt-4">
