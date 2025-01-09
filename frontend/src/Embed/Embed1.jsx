@@ -108,7 +108,7 @@ function App() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const productid = `67754a4255ceb162ce1a69b3`;
+  const productid = `6778402de1c712b51e7cc2fe`;
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -116,7 +116,7 @@ function App() {
         setLoading(true);
 
         const response = await fetch(
-          `http://localhost:8080/api/review/67754a4255ceb162ce1a69b3/getallreviews`
+          `http://localhost:8080/api/review/6778402de1c712b51e7cc2fe/getallreviews`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");

@@ -122,15 +122,7 @@ const Navbar = ({ scrollToSection}) => {
                   {user?.name}
                   Dashboard
                 </button>
-                <button
-                  onClick={() => {
-                    navigate("/settings");
-                    setIsop(false);
-                  }}
-                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
-                >
-                  Settings
-                </button>
+                
                 <button
                   onClick={() => {
                     handleLogout();
