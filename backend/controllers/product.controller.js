@@ -21,6 +21,11 @@ export const createProduct = async (req,res,next) => {
         return next(errorHandler(400, "Product name and URL are required")); 
     }
     try{
+        user.credit-=5;
+        if(user.credit<0){
+            return next(errorHandler(403, "Insufficient credit"));
+        }
+        await user.save();
         const product = await Product.create({businessId:businessid,productName,productUrl,description});
         await product.save();
         const formUrl=`${process.env.FRONT_URL}${product._id}`;

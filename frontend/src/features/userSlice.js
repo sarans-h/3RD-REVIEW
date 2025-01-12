@@ -149,7 +149,7 @@ export const loginUser = (formData) => async (dispatch) => {
         const config = { headers: { "Content-Type": "multipart/form-data" } };
 
         const { data } = await axios.post('/api/auth/signin', formData, config);
-        console.log(data);
+        // console.log(data);
 
         dispatch(authSuccess(data));
     } catch (error) {
@@ -174,7 +174,7 @@ export const registerUser = (formdata) => async (dispatch) => {
         dispatch(authRequest());
         const config = { headers: { "Content-Type": "multipart/form-data" } };
         const { data } = await axios.post('/api/auth/signup', formdata,config);
-        console.log(data);
+        // console.log(data);
 
         dispatch(authSuccess(data.user));
     } catch (error) {

@@ -105,7 +105,7 @@ const Navbar = ({ scrollToSection}) => {
             //  <button  className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>
             <div className="relative">
             <img
-              src="https://placehold.co/150x150.png"
+              src={`https://ui-avatars.com/api/?name=${user?.name?.split(" ")[0]}&background=fff&color=000`}
               alt="Profile"
               className="w-8 h-8 rounded-full cursor-pointer"
               onClick={() => setIsop(!isop)}
@@ -119,7 +119,7 @@ const Navbar = ({ scrollToSection}) => {
                   }}
                   className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
-                  {user?.name}
+                  {user?.name}{" "}
                   Dashboard
                 </button>
                 
@@ -128,7 +128,7 @@ const Navbar = ({ scrollToSection}) => {
                     handleLogout();
                     setIsop(false);
                   }}
-                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                  className="block text-gray-300 w-full hover:text-white px-4 py-2 rounded-xl  hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   LogOut
                 </button>
@@ -153,7 +153,7 @@ const Navbar = ({ scrollToSection}) => {
             </button>
 
             {isOpen && (
-              <div className="absolute right-0 mt-2 w-48 backdrop-blur-xl transform transition-all duration-200 origin-top-right">
+              <div className="absolute right-0 mt-2 w-48 backdrop-blur-xl rounded-xl  transform transition-all duration-200 origin-top-right">
                 <button
                   onClick={()=>{
                     if (window.location.pathname !== "/") {
@@ -167,7 +167,7 @@ const Navbar = ({ scrollToSection}) => {
                       setIsOpen(false);
                     }}
                   }
-                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                  className="block w-full text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Features
                 </button>
@@ -184,9 +184,19 @@ const Navbar = ({ scrollToSection}) => {
                       setIsOpen(false);
                     }}
                   }
-                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                  className="block w-full text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Pricing
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsop(false);
+                  }}
+                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                >
+                  {user?.name}{" "}
+                  Dashboard
                 </button>
                 <button
                  onClick={()=>{
@@ -201,13 +211,13 @@ const Navbar = ({ scrollToSection}) => {
                     setIsOpen(false);
                   }}
                 }
-                  className="block text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
+                  className="block w-full text-gray-300 hover:text-white px-4 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
                 >
                   Contact
                 </button>
                 
                 
-                <button onClick={()=>{handleLogout()}} className="  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>
+                <button onClick={()=>{handleLogout()}} className="w-full px-4 py-4  bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-l font-bold leading-none tracking-tighter text-transparent">LogOut</button>
                 
                 
 

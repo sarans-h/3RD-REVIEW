@@ -105,7 +105,7 @@ export const getBusiness = (businessId) => async (dispatch) => {
         dispatch(getBusinessSuccess(data));
     }
     catch (error) {
-        console.log(error);
+        // console.log(error);
         dispatch(getBusinessFail(error.response.data.message));
     }
 }
