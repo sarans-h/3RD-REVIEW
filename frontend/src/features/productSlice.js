@@ -44,6 +44,11 @@ const productSlice = createSlice({
             state.pLoading = false;
             state.perror = action.payload;
         },
+        clearProduct: (state) => {
+            state.product = {};
+            state.pLoading = false;
+            state.perror = null;
+        },
         clearperrors: (state) => {
             state.perror = null;
         }
@@ -59,6 +64,7 @@ export const {
     getProductDetailsRequest,
     getProductDetailsSuccess,
     getProductDetailsFail,
+    clearProduct,
     clearperrors
 } = productSlice.actions;
 

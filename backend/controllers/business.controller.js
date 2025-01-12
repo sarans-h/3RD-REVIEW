@@ -5,7 +5,7 @@ import Product from '../models/product.model.js';
 
 //  createBusiness function
 export const createBusiness = async (req,res,next) => {
-    console.log(req.body);
+    // console.log(req.body);
     const userId = req.user.id;
     const { domain,name,description } = req.body;
 
@@ -18,10 +18,14 @@ export const createBusiness = async (req,res,next) => {
     }
 
     try{
+        const user = await User.findById(userId);
+        user.credit-=10;
+        if(user.credit<0){
+            return next(errorHandler(403, "Insufficient credit"));
+        }
         const business = new Business({ ownerId:userId, domain,name,description });
         await business.save();
 
-        const user = await User.findById(userId);
         user.businessIds.push(business._id);
         await user.save();
 

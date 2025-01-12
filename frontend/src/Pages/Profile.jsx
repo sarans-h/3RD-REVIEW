@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import InteractiveHoverButton from '../components/ui/interactive-hover-button';
 import { Toaster, toast } from "react-hot-toast";
 import { clearberrors, myBusiness } from '../features/businessSlice.js';
+import { loadUser } from '../features/userSlice.js';
 
 function Profile() { // Accept onAddRoom as a prop
     const dispatch=useDispatch();
@@ -15,7 +16,9 @@ function Profile() { // Accept onAddRoom as a prop
         if (berror) {
             toast.error(berror);
         }
-    }, [berror]);
+    }, [berror,dispatch]);
+
+
 
 return (
     <div className="flex w-full flex-col md:flex-row h-screen bg-black justify-center items-center overflow-scroll">

@@ -20,7 +20,7 @@ const MyBusiness = ({ setLinks, getIconColor, setActiveComponent }) => {
       toast.error(berror);
       dispatch(clearberrors());
     }
-  }, []);
+  }, [dispatch, berror]);
   return (
     <div className="bg-black h-[100vh] w-[96vw]">
       <div className="p-4">

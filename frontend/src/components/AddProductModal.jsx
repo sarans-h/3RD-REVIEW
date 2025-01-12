@@ -7,8 +7,9 @@ import {
     ModalTrigger,
 } from "./ui/animated-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct, clearperrors, getProducts } from "../features/productSlice";
+import { addProduct, clearperrors, getProducts,clearProduct } from "../features/productSlice";
 import { Toaster,toast } from "react-hot-toast";
+import { loadUser } from "../features/userSlice";
 
 export function AddProductModal(businessid) {
     const [productName, setProductName] = useState("");
@@ -19,6 +20,8 @@ export function AddProductModal(businessid) {
     useEffect(()=>{
         if(product.success){
             toast.success("Product added successfully");
+            dispatch(clearProduct());
+            dispatch(loadUser());
         }
         if(perror){
             toast.error(perror);

@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import axios from "axios";
+import { loadUser } from "../features/userSlice";
+
 import { Toaster, toast } from "react-hot-toast";
 import { addBusiness, clearberrors, clearBusiness } from "../features/businessSlice";
 
-function AddBusiness() {
+function AddBusiness({setActiveComponent}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {business,bLoading,berror}=useSelector((state)=>state.business);
@@ -18,6 +20,7 @@ function AddBusiness() {
         if(business.success){
             toast.success("Business added successfully");
         dispatch(clearBusiness())    
+        dispatch(loadUser());
 
         }
         if (berror) {
@@ -43,12 +46,13 @@ function AddBusiness() {
             domain: formData.domain,
             description: formData.description,
         };
-        dispatch(addBusiness(data));    
+         dispatch(addBusiness(data));    
         setFormData({
             name: "",
             domain: "",
             description: "",
         }); 
+        
     };
 
     return (

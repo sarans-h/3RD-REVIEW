@@ -13,8 +13,11 @@ import {
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { loadUser } from "../features/userSlice.js";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
+    const dispatch=useDispatch();
     const [activeComponent, setActiveComponent] = useState("Profile");
     const [open, setOpen] = useState(false);
     const [componentMap, setComponentMap] = useState({
@@ -116,6 +119,7 @@ const Dashboard = () => {
             <Profile />
         );
     }, [activeComponent, links, componentMap]);
+
 
     return (
         <div className={cn("flex flex-col md:flex-row bg-gray-100 flex-1 w-full overflow-hidden", "h-[100vh]")}>
