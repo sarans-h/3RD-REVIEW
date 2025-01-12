@@ -50,7 +50,7 @@ const Form = () => {
             // navigate('/thankyou')
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error("Failed to add review Try again later");
     }
 };

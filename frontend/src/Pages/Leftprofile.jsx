@@ -17,7 +17,7 @@ function LeftProfile() {
     };
 
     const handleSave = () => {
-        console.log(profile);
+        // console.log(profile);
         setIsEditing(false);
     };
 

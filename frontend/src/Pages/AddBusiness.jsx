@@ -118,7 +118,7 @@ function AddBusiness({setActiveComponent}) {
                 <div className="h-[80vh] bg-black w-[40vw] p-4 text-white rounded-lg max-w-sm mx-auto">
                     <h2 className="text-xl">{formData.name||"Your Business"}</h2>
                     <div className="mt-4">
-                        {console.log(formData.domain)}
+                       
                         {formData.domain && (
                             <iframe
                                 src={`https://${formData.domain}`}

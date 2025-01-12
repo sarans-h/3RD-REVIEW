@@ -11,6 +11,8 @@ import Dashboard from "./Pages/Dashboard";
 import Product from "./Pages/Product";
 import Form from "./Pages/Form";
 import Embed1 from "./Embed/Embed1";
+import Success from "./Pages/Success";
+import Fail from "./Pages/Fail.jsx";
 
 function App() {
   // Refs for scrollable sections
@@ -61,6 +63,8 @@ function AppContent({ sectionsRef, scrollToSection }) {
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/product/:productid" element={<Product />} />
         <Route path="/embed/:productid/embed1" element={<Embed1 />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Fail/>}/>
       </Routes>
       {!isDashboardRoute && !isEmbed1Route && !isProductRoute && <Footer />}
     </>

@@ -8,7 +8,7 @@ import {
     User,
     Plus,
     BriefcaseBusiness,
-    Building2
+    Building
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const Dashboard = () => {
     const [activeComponent, setActiveComponent] = useState("Profile");
     const [open, setOpen] = useState(false);
     const [componentMap, setComponentMap] = useState({
-        "Profile": Profile,
+        "Profile": (props)=><Profile {...props} />,
         "Add Business": AddBusiness,
         "My Business": (props) => <MyBusiness {...props} />,
         "Business": (props) => <Business {...props} />,
@@ -40,7 +40,7 @@ const Dashboard = () => {
             case "My Business":
                 return <BriefcaseBusiness className={`h-5 w-5 flex-shrink-0 ${getIconColor("My Business")}`} />;
             default:
-                return <Building2 className={`h-5 w-5 flex-shrink-0 ${getIconColor(component)}`} />;
+                return <Building className={`h-5 w-5 flex-shrink-0 ${getIconColor(component)}`} />;
         }
     };
 
