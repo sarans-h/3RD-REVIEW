@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import API_URL from './constant';
 
 const initialState = { 
     business: {}, 
@@ -80,7 +80,7 @@ export const addBusiness = (formData) => async (dispatch) => {
             },
             withCredentials: true, 
         };
-        const { data } = await axios.post('/api/business/createbusiness', formData, config);
+        const { data } = await axios.post(`${API_URL}/api/business/createbusiness`, formData, config);
         dispatch(addBusinessSuccess(data));
     } catch (error) {
         dispatch(addBusinessFail(error.response.data.message));
@@ -92,7 +92,7 @@ export const myBusiness = () => async (dispatch) => {
         const config = {
             withCredentials: true, // Include cookies in the request
         };
-        const { data } = await axios.get('/api/business/mybusiness', config);
+        const { data } = await axios.get(`${API_URL}/api/business/mybusiness`, config);
         dispatch(loadMyBusinessSuccess(data));
     } catch (error) {
         dispatch(loadMyBusinessFail(error.response.data.message));
@@ -101,7 +101,7 @@ export const myBusiness = () => async (dispatch) => {
 export const getBusiness = (businessId) => async (dispatch) => {
     try {
         dispatch(getBusinessRequest());
-        const {data}=await axios.get(`/api/business/getbusiness`, {
+        const {data}=await axios.get(`${API_URL}/api/business/getbusiness`, {
             headers: {
               'businessId': businessId, 
             },

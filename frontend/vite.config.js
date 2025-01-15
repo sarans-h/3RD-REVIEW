@@ -9,15 +9,15 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8080', // Your backend server
-        changeOrigin: true,
-        // secure: true, // Set to true in production, false in development
-        // Automatically forward cookies in production
-        withCredentials: true,
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:8080', // Your backend server
+  //       changeOrigin: true,
+  //       // secure: true, // Set to true in production, false in development
+  //       // Automatically forward cookies in production
+  //       withCredentials: true,
+  //     },
+  //   },
+  // },
 });
