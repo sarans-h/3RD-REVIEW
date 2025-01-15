@@ -16,7 +16,8 @@ const PricingCard = ({ title, price, features, active }) => {
       navigate('/login')
 
     }else{
-    let response= await axios.post("https://threerd-review.onrender.com/api/payment/createpayment",product);
+    let response= await axios.post("https://threerd-review.onrender.com/api/payment/createpayment",product,
+    { withCredentials: true });
     if(response&&response.status===200)
       {
         console.log(response.data.id);
