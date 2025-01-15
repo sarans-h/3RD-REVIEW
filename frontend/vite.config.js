@@ -16,7 +16,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: true, // Set to true in production, false in development
         // Automatically forward cookies in production
-        withCredentials: true,
+        // withCredentials: true,
       },
     },
   },
