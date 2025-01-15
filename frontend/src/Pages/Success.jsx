@@ -11,7 +11,7 @@ const Success = () => {
 const productName = query.get("product_name");
   useEffect(() => {
     if (sessionId) {
-      axios.post("/api/payment/paymentSuccess", { sessionId, productName })
+      axios.post("https://threerd-review.onrender.com/api/payment/paymentSuccess", { sessionId, productName },{withCredentials:true})
         .then((res) => {
             toast.success(res.data.message);
             setTimeout(() => {
