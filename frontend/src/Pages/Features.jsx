@@ -29,7 +29,7 @@ const Features = () => {
             <HeroVideoDialog
               className="w-full aspect-video"
               animationStyle="from-center"
-              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+             videoSrc="https://ik.imagekit.io/1x1lu8hz8/Untitled%20video%20-%20Made%20with%20Clipchamp.mp4?updatedAt=1736982884982"
               thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
               thumbnailAlt="Hero Video"
             />
