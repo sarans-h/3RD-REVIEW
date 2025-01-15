@@ -145,7 +145,7 @@ function App() {
         setLoading(true);
 
         const response = await fetch(
-          \`https://threerd-review.onrender.com/api/review/${productid}/getallreviews\`,{
+          \`https://threerd-review-1.onrender.com/getreview/${productid}\`,{
            credentials:'include',
           });
         if (!response.ok) {
