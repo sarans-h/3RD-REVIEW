@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import API_URL from './constant';
+
 const initialState = { 
     product: {}, 
     pLoading: false,
@@ -77,7 +79,7 @@ export const addProduct = (product,businessid) => async (dispatch) => {
             },
             withCredentials: true,
         };
-        const { data } = await axios.post(`/api/product/${businessid.businessid}/createproduct`, product, config);
+        const { data } = await axios.post(`${API_URL}/api/product/${businessid.businessid}/createproduct`, product, config);
         dispatch(addProductSuccess(data));
     } catch (error) {
         dispatch(addProductFail(error.response.data.message));
@@ -89,7 +91,7 @@ export const getProducts = (businessid) => async (dispatch) => {
         const config = {
             withCredentials: true, // Include cookies in the request
         };
-        const { data } = await axios.get(`/api/product/${businessid}/getproducts`, config);
+        const { data } = await axios.get(`${API_URL}/api/product/${businessid}/getproducts`, config);
         dispatch(getProductsSuccess(data));
     }
     catch (error) {
@@ -104,7 +106,7 @@ export const productDetails=(productid)=>async(dispatch)=>{
         const config = {
             withCredentials: true, // Include cookies in the request
         };
-        const { data } = await axios.get(`/api/product/${productid}`, config);
+        const { data } = await axios.get(`${API_URL}/api/product/${productid}`, config);
         dispatch(getProductDetailsSuccess(data));
     }
     catch(error){

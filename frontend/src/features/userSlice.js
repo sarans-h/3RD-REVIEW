@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import API_URL from './constant';
 
 
 const token = document.cookie.split('; ').find(row => row.startsWith('access_token='));
@@ -153,7 +154,7 @@ export const loginUser = (formData) => async (dispatch) => {
             withCredentials: true, // Include cookies in the request
         };
 
-        const { data } = await axios.post('/api/auth/signin', formData, config);
+        const { data } = await axios.post(`${API_URL}/api/auth/signin`, formData, config);
         // console.log(data);
 
         dispatch(authSuccess(data));
@@ -168,7 +169,7 @@ export const logoutUser = () => async (dispatch) => {
         const config = {
             withCredentials: true, // Include cookies in the request
         };
-        await axios.post('/api/auth/signout', {}, config);
+        await axios.post(`${API_URL}/api/auth/signout`, {}, config);
 
         dispatch(logoutSuccess()); // No payload needed if we're setting user to null
         
@@ -186,7 +187,7 @@ export const registerUser = (formdata) => async (dispatch) => {
             },
             withCredentials: true, // Include cookies in the request
         };
-        const { data } = await axios.post('/api/auth/signup', formdata,config);
+        const { data } = await axios.post(`${API_URL}/api/auth/signup`, formdata,config);
         // console.log(data);
 
         dispatch(authSuccess(data.user));
@@ -203,7 +204,7 @@ export const loadUser=()=>async(dispatch)=>{
         const config = {
             withCredentials: true, // Include cookies in the request
         };
-        const { data } = await axios.get('/api/auth/me', config);
+        const { data } = await axios.get(`${API_URL}/api/auth/me`, config);
         dispatch(loadUserSuccess(data));
 
     }catch(error){
