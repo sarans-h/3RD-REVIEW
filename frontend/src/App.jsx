@@ -21,6 +21,7 @@ function App() {
     pricing: useRef(null),
     contact: useRef(null),
   };
+  console.log(import.meta.env.VITE_BACKEND_URL);
 
   const scrollToSection = (section) => {
     sectionsRef[section]?.current.scrollIntoView({ behavior: "smooth" });

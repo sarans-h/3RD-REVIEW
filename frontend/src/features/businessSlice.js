@@ -78,6 +78,7 @@ export const addBusiness = (formData) => async (dispatch) => {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
+            withCredentials: true, 
         };
         const { data } = await axios.post('/api/business/createbusiness', formData, config);
         dispatch(addBusinessSuccess(data));
@@ -88,7 +89,10 @@ export const addBusiness = (formData) => async (dispatch) => {
 export const myBusiness = () => async (dispatch) => {
     try {
         dispatch(loadMyBusinessRequest());
-        const { data } = await axios.get('/api/business/mybusiness');
+        const config = {
+            withCredentials: true, // Include cookies in the request
+        };
+        const { data } = await axios.get('/api/business/mybusiness', config);
         dispatch(loadMyBusinessSuccess(data));
     } catch (error) {
         dispatch(loadMyBusinessFail(error.response.data.message));
@@ -101,6 +105,7 @@ export const getBusiness = (businessId) => async (dispatch) => {
             headers: {
               'businessId': businessId, 
             },
+            withCredentials: true,
           });
         dispatch(getBusinessSuccess(data));
     }
