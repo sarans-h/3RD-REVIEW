@@ -19,26 +19,26 @@ connectDB();
 
 const app = express();
 
-// app.use(cors({
-//   origin: process.env.FRONT_URL,
-//  credentials:true
+app.use(cors({
+  origin: process.env.FRONT_URL,
+ credentials:true
 
-// }));
-app.use((req, res, next) => {
-  cors({
-    origin: (origin, callback) => {
-      const allowedOrigin = process.env.FRONT_URL; // Your specific frontend URL
-      if (!origin || origin === allowedOrigin) {
-        // Allow requests from the frontend URL or no origin (e.g., Postman)
-        callback(null, allowedOrigin);
-      } else {
-        // Allow other origins but with no credentials
-        callback(null, '*');
-      }
-    },
-    credentials: (req.headers.origin === process.env.FRONT_URL), // Credentials true only for FRONTEND_URL
-  })(req, res, next);
-});
+}));
+// app.use((req, res, next) => {
+//   cors({
+//     origin: (origin, callback) => {
+//       const allowedOrigin = process.env.FRONT_URL; // Your specific frontend URL
+//       if (!origin || origin === allowedOrigin) {
+//         // Allow requests from the frontend URL or no origin (e.g., Postman)
+//         callback(null, allowedOrigin);
+//       } else {
+//         // Allow other origins but with no credentials
+//         callback(null, '*');
+//       }
+//     },
+//     credentials: (req.headers.origin === process.env.FRONT_URL), // Credentials true only for FRONTEND_URL
+//   })(req, res, next);
+// });
 
 app.use(express.json());
 app.use(cookieParser());
