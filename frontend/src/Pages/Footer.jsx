@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#040405] text-white py-8 shadow-md border-t border-gray-700">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+{/*         <div className="flex flex-col md:flex-row justify-between items-center"> */}
        
 
           {/* Navigation Links */}
