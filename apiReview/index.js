@@ -22,6 +22,7 @@ mongoose
 app.get("/getreview/:productid",async (req, res, next) => {
     
         const { productid } = req.params;
+    const productId = mongoose.Types.ObjectId(productid);
     
         try {
             // const product = await Product.findById(productid);
@@ -29,7 +30,7 @@ app.get("/getreview/:productid",async (req, res, next) => {
             //     return next(errorHandler(404, "Product not found."));
             // }
     
-            const reviews = await Review.find({ productId: productid });
+            const reviews = await Review.find({ productId: productId });
             res.status(200).json({ success: true, reviews });
         }
         catch (err) {
