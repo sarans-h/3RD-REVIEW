@@ -28,7 +28,7 @@ export const createProduct = async (req,res,next) => {
         await user.save();
         const product = await Product.create({businessId:businessid,productName,productUrl,description});
         await product.save();
-        const formUrl=`${process.env.FRONT_URL}${product._id}`;
+        const formUrl=`${process.env.FRONT_URL}/${product._id}`;
         product.formUrl=formUrl;
         await product.save();
         const business=await Business.findById(businessid);
