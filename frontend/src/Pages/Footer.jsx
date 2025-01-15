@@ -8,7 +8,7 @@ const Footer = () => {
        
 
           {/* Navigation Links */}
-          <div className="flex space-x-6 mb-4 md:mb-0">
+{/*           <div className="flex space-x-6 mb-4 md:mb-0">
             <a
               href="#"
               className="text-gray-300 hover:text-yellow-400 transition-colors text-sm"
@@ -34,9 +34,9 @@ const Footer = () => {
               Contact
             </a>
           </div>
-
+ */}
           {/* Social Media Icons */}
-          <div className="flex space-x-4">
+{/*           <div className="flex space-x-4">
             <a
               href="#"
               className="text-gray-400 hover:text-blue-500 transition-colors"
@@ -67,7 +67,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
+ */}
         {/* Bottom Section */}
         <div className="mt-6 text-gray-400 text-xs text-center">
           <p>
