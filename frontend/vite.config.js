@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // Your backend server
+        target: 'https://threerd-review.onrender.com', // Your backend server
         changeOrigin: true,
         // secure: true, // Set to true in production, false in development
         // Automatically forward cookies in production
