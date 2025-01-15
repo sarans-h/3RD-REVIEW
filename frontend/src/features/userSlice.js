@@ -146,10 +146,15 @@ export const { authRequest,
 export const loginUser = (formData) => async (dispatch) => {
     try {
         dispatch(authRequest());
-        const config = { headers: { "Content-Type": "multipart/form-data" } };
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true, // Include cookies in the request
+        };
 
         const { data } = await axios.post('/api/auth/signin', formData, config);
-        console.log(data);
+        // console.log(data);
 
         dispatch(authSuccess(data));
     } catch (error) {
@@ -160,7 +165,10 @@ export const loginUser = (formData) => async (dispatch) => {
 };
 export const logoutUser = () => async (dispatch) => {
     try {
-        await axios.post('/api/auth/signout');
+        const config = {
+            withCredentials: true, // Include cookies in the request
+        };
+        await axios.post('/api/auth/signout', {}, config);
 
         dispatch(logoutSuccess()); // No payload needed if we're setting user to null
         
@@ -172,9 +180,14 @@ export const logoutUser = () => async (dispatch) => {
 export const registerUser = (formdata) => async (dispatch) => {
     try {
         dispatch(authRequest());
-        const config = { headers: { "Content-Type": "multipart/form-data" } };
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true, // Include cookies in the request
+        };
         const { data } = await axios.post('/api/auth/signup', formdata,config);
-        console.log(data);
+        // console.log(data);
 
         dispatch(authSuccess(data.user));
     } catch (error) {
@@ -187,9 +200,10 @@ export const registerUser = (formdata) => async (dispatch) => {
 export const loadUser=()=>async(dispatch)=>{
     try{
         dispatch(loadUserRequest());
-        const {data}=await axios.get(
-            '/api/auth/me',
-        )
+        const config = {
+            withCredentials: true, // Include cookies in the request
+        };
+        const { data } = await axios.get('/api/auth/me', config);
         dispatch(loadUserSuccess(data));
 
     }catch(error){

@@ -8,17 +8,20 @@ import {
     User,
     Plus,
     BriefcaseBusiness,
-    Building2
+    Building
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { loadUser } from "../features/userSlice.js";
+import { useDispatch } from "react-redux";
 
 const Dashboard = () => {
+    const dispatch=useDispatch();
     const [activeComponent, setActiveComponent] = useState("Profile");
     const [open, setOpen] = useState(false);
     const [componentMap, setComponentMap] = useState({
-        "Profile": Profile,
+        "Profile": (props)=><Profile {...props} />,
         "Add Business": AddBusiness,
         "My Business": (props) => <MyBusiness {...props} />,
         "Business": (props) => <Business {...props} />,
@@ -37,7 +40,7 @@ const Dashboard = () => {
             case "My Business":
                 return <BriefcaseBusiness className={`h-5 w-5 flex-shrink-0 ${getIconColor("My Business")}`} />;
             default:
-                return <Building2 className={`h-5 w-5 flex-shrink-0 ${getIconColor(component)}`} />;
+                return <Building className={`h-5 w-5 flex-shrink-0 ${getIconColor(component)}`} />;
         }
     };
 
@@ -117,10 +120,17 @@ const Dashboard = () => {
         );
     }, [activeComponent, links, componentMap]);
 
+
     return (
         <div className={cn("flex flex-col md:flex-row bg-gray-100 flex-1 w-full overflow-hidden", "h-[100vh]")}>
             <Sidebar open={open} setOpen={setOpen}>
-                <SidebarBody className="justify-between gap-10 bg-black">
+                <SidebarBody className="justify-between gap-10 bg-black ">
+                    <button 
+                        className="md:hidden p-1 text-white absolute top-2 right-2" 
+                        onClick={() => setOpen(false)}
+                    >
+                        X
+                    </button>
                     <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                         <Logo />
                         <div className="mt-8 flex flex-col gap-2">

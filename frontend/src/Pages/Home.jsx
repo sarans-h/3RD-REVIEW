@@ -5,8 +5,10 @@ import RetroGrid from "../components/ui/retro-grid";
 import Contact from "./Contact";
 import Features from "./Features";
 import Pricing from "./Pricing";
+import { useNavigate } from "react-router-dom";
 
 function Home({ sectionsRef }) {
+  const navigate=useNavigate();
   return (
     <>
       <div className="relative flex h-screen w-full flex-col items-center justify-center bg-[#151719] overflow-hidden md:shadow-xl">
@@ -15,7 +17,7 @@ function Home({ sectionsRef }) {
         </span>
         <RetroGrid />
         <div className="z-50 flex flex-col items-center ">
-          <RainbowButton>
+          <RainbowButton onClick={()=>navigate('/dashboard')}>
             <span className="text-white">Start for free ✨</span>
           </RainbowButton>
 

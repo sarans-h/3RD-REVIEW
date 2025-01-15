@@ -19,6 +19,7 @@ const ProtectedRoute = ({ element }) => {
 
   useEffect(() => {
     dispatch(loadUser());
+    
   }, [dispatch]);
   const location = useLocation();
 

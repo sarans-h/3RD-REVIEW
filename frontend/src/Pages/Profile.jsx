@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import InteractiveHoverButton from '../components/ui/interactive-hover-button';
 import { Toaster, toast } from "react-hot-toast";
 import { clearberrors, myBusiness } from '../features/businessSlice.js';
+import { loadUser } from '../features/userSlice.js';
+import { useNavigate } from 'react-router-dom';
 
-function Profile() { // Accept onAddRoom as a prop
+function Profile({setActiveComponent}) { // Accept onAddRoom as a prop
     const dispatch=useDispatch();
     const {user}=useSelector((state)=>state.user)
     const {businesss,bLoading,berror}=useSelector((state)=>state.business);
@@ -15,7 +17,10 @@ function Profile() { // Accept onAddRoom as a prop
         if (berror) {
             toast.error(berror);
         }
-    }, [berror]);
+    }, [berror,dispatch]);
+    const navigate=useNavigate();
+
+
 
 return (
     <div className="flex w-full flex-col md:flex-row h-screen bg-black justify-center items-center overflow-scroll">
@@ -46,7 +51,7 @@ return (
                     <p className="text-gray-400">{user?.businessIds?.length}</p>
                     <div className="-ml-6" >
 
-                    <InteractiveHoverButton className=' text-green-400' text='Add business' />
+                    <InteractiveHoverButton className=' text-green-400' text='Add business' onClick={()=>setActiveComponent("Add Business")}/>
                     </div>
                 </div>
                 <div className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 ">
@@ -54,7 +59,9 @@ return (
                     <p className="text-gray-400">{user?.credit}</p>
                     <div className="-ml-6" >
 
-                    <InteractiveHoverButton className=' text-green-400' text='Add Credit' />
+                    <InteractiveHoverButton
+                        onClick={()=>navigate('/')}
+                     className=' text-green-400' text='Add Credit' />
                     </div>
                 </div>
                 <div className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 ">

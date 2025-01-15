@@ -44,6 +44,11 @@ const productSlice = createSlice({
             state.pLoading = false;
             state.perror = action.payload;
         },
+        clearProduct: (state) => {
+            state.product = {};
+            state.pLoading = false;
+            state.perror = null;
+        },
         clearperrors: (state) => {
             state.perror = null;
         }
@@ -59,6 +64,7 @@ export const {
     getProductDetailsRequest,
     getProductDetailsSuccess,
     getProductDetailsFail,
+    clearProduct,
     clearperrors
 } = productSlice.actions;
 
@@ -69,6 +75,7 @@ export const addProduct = (product,businessid) => async (dispatch) => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            withCredentials: true,
         };
         const { data } = await axios.post(`/api/product/${businessid.businessid}/createproduct`, product, config);
         dispatch(addProductSuccess(data));
@@ -79,7 +86,10 @@ export const addProduct = (product,businessid) => async (dispatch) => {
 export const getProducts = (businessid) => async (dispatch) => {
     try {
         dispatch(getProductsRequest());
-        const { data } = await axios.get(`/api/product/${businessid}/getproducts`);
+        const config = {
+            withCredentials: true, // Include cookies in the request
+        };
+        const { data } = await axios.get(`/api/product/${businessid}/getproducts`, config);
         dispatch(getProductsSuccess(data));
     }
     catch (error) {
@@ -91,7 +101,10 @@ export const getProducts = (businessid) => async (dispatch) => {
 export const productDetails=(productid)=>async(dispatch)=>{
     try{
         dispatch(getProductDetailsRequest());
-        const { data } = await axios.get(`/api/product/${productid}`);
+        const config = {
+            withCredentials: true, // Include cookies in the request
+        };
+        const { data } = await axios.get(`/api/product/${productid}`, config);
         dispatch(getProductDetailsSuccess(data));
     }
     catch(error){
