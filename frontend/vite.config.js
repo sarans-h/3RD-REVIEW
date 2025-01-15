@@ -14,7 +14,7 @@ export default defineConfig({
       '/api': {
         target: 'https://threerd-review.onrender.com', // Your backend server
         changeOrigin: true,
-        // secure: true, // Set to true in production, false in development
+        secure: true, // Set to true in production, false in development
         // Automatically forward cookies in production
         withCredentials: true,
       },
