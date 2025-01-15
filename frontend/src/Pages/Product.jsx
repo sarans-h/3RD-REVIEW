@@ -145,8 +145,9 @@ function App() {
         setLoading(true);
 
         const response = await fetch(
-          \`https://threerd-review.onrender.com/api/review/${productid}/getallreviews\`
-        );
+          \`https://threerd-review.onrender.com/api/review/${productid}/getallreviews\`,{
+           credentials:'include',
+          });
         if (!response.ok) {
           throw new Error("Failed to fetch reviews");
         }
