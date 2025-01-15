@@ -22,7 +22,7 @@ mongoose
 app.get("/getreview/:productid",async (req, res, next) => {
     
         const { productid } = req.params;
-    const productId = mongoose.Types.ObjectId(productid);
+    const productId =new mongoose.Types.ObjectId(productid);
     
         try {
             // const product = await Product.findById(productid);
