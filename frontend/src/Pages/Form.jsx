@@ -40,7 +40,7 @@ const Form = () => {
         customerEmail,
     };
     try {
-        const { data } = await axios.post(`/api/review/${productid}/createreview`, review);
+        const { data } = await axios.post(`https://threerd-review.onrender.com/api/review/${productid}/createreview`, review);
         if (data.success) {
             toast.success("Review added successfully");
             setRating(0);
