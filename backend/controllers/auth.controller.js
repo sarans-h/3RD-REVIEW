@@ -25,6 +25,12 @@ export const signup = async (req, res, next) => {
     res.status(201).cookie('access_token', token, {
       // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
       path: '/',
+      sameSite: 'None',
+      // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
+        httpOnly: true, 
+secure:true, // Enable secure only in production
+path: '/',
+    maxAge: 24 * 60 * 60 * 1000, 
     }).json({ message: 'Signup successful', user: newUser });
   } catch (error) {
     next(error);
@@ -56,6 +62,12 @@ export const signin = async (req, res, next) => {
     res.status(200).cookie('access_token', token, {
         // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
         path: '/',
+        sameSite: 'None',
+        // httpOnly: true,//to prevent access from javascript(commented to access in frontend)
+          httpOnly: true, 
+  secure:true, // Enable secure only in production
+  path: '/',
+      maxAge: 24 * 60 * 60 * 1000, 
       })
       .json(rest);
   } catch (error) {
