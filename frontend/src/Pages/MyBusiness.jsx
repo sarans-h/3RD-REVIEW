@@ -4,7 +4,7 @@ import InteractiveHoverButton from "../components/ui/interactive-hover-button";
 import { useDispatch, useSelector } from "react-redux";
 import { clearberrors, myBusiness } from "../features/businessSlice";
 import { BriefcaseBusiness, User, Plus, Building } from "lucide-react";
-import { RiNumber1,RiNumber0,RiNumber2,RiNumber3,RiNumber4,RiNumber5,RiNumber6,RiNumber7,RiNumber8,RiNumber9 } from "react-icons/ri";
+
 
 const possibleIcons = [Building];
 function getRandomIcon() {
