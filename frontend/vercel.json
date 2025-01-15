@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "https://threerd-review.onrender.com/"
+            "destination": "https://threerd-review.onrender.com"
         },
         {
             "source": "/(.*)",
