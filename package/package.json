@@ -1,6 +1,6 @@
 {
   "name": "testimonials-3rd",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A package for 3rd Party review collecting web app TESTIMONIALS ",
   "homepage": "https://github.com/sarans-h/3RD-REVIEW#readme",
   "bugs": {
@@ -10,6 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/sarans-h/3RD-REVIEW.git"
   },
+  "keywords": [
+    "testimonials",
+    "3rd",
+    "party",
+    "reviews",
+    "web",
+    "app"
+  ],
   "license": "ISC",
   "author": "Saransh",
   "type": "commonjs",
