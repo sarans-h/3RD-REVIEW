@@ -1,0 +1,41 @@
+{
+  "name": "testimonials-3rd",
+  "version": "1.0.1",
+  "description": "A package for 3rd Party review collecting web app TESTIMONIALS ",
+  "homepage": "https://github.com/sarans-h/3RD-REVIEW#readme",
+  "bugs": {
+    "url": "https://github.com/sarans-h/3RD-REVIEW/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarans-h/3RD-REVIEW.git"
+  },
+  "license": "ISC",
+  "author": "Saransh",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "rollup": "^2.79.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  }
+}
