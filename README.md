@@ -50,7 +50,7 @@ TESTIMONIALS simplifies feedback collection for businesses, freelancers, content
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ---
-We welcome contributions to make Testimonials even better! Follow the [contribution guidelines](CONTRIBUTING.md) to get started.
+We welcome contributions to make Testimonials even better!
 
 ## 🌟 Support Us
 

@@ -6,6 +6,7 @@ import Contact from "./Contact";
 import Features from "./Features";
 import Pricing from "./Pricing";
 import { useNavigate } from "react-router-dom";
+import { Link } from "lucide-react";
 
 function Home({ sectionsRef }) {
   const navigate=useNavigate();
@@ -22,6 +23,11 @@ function Home({ sectionsRef }) {
           </RainbowButton>
 
           <InteractiveHoverButton onClick={() => sectionsRef.pricing.current.scrollIntoView({ behavior: "smooth" })}/>
+            <a href="https://www.npmjs.com/package/testimonials-3rd" target="_blank" rel="noopener noreferrer" className="text-white underline">
+            <Link className="text-pink-500 inline text-sm mr-3 " />
+            NPM PACKAGE
+
+            </a>
         </div>
       </div>
       <div ref={sectionsRef.features}>

@@ -84,7 +84,7 @@ const LogSig = () => {
   };
 
   return (
-    <div className="bg-black">
+    <div className="bg-black h-[100vh]">
       <div className="h-auto flex flex-col lg:flex-row items-center justify-center bg-black text-white px-4">
         {/* Left Side: Highlight and Additional Content */}
         <motion.div

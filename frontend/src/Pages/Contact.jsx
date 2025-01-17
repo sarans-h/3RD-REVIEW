@@ -35,9 +35,9 @@ const Contact = () => {
             </p>
             <p className="text-gray-400 text-sm lg:text-base max-w-lg mx-auto lg:mx-0">
               Need immediate assistance? Reach us at{" "}
-              <span className="font-bold text-white">support@example.com</span>{" "}
+              <span className="font-bold text-white">saranshgupta6252@gmail.com</span>{" "}
               or call us at{" "}
-              <span className="font-bold text-white">+91 222222222</span>.
+              <span className="font-bold text-white">+91 xxxxxxxxx</span>.
             </p>
           </HeroHighlight>
         </motion.div>
