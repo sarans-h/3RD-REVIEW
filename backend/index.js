@@ -19,11 +19,21 @@ connectDB();
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.FRONT_URL,
- credentials:true
+const allowedOrigins = process.env.FRONT_URLS.split(',');
 
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
+
 // app.use((req, res, next) => {
 //   cors({
 //     origin: (origin, callback) => {
