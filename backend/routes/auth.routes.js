@@ -13,7 +13,7 @@ router.get("/github-activity/:page", async (req, res) => {
     const response = await fetch(`https://api.github.com/users/sarans-h/events?per_page=30&page=${page}`, {
       headers: {
         'Accept': 'application/vnd.github+json',
-        'Authorization': `Bearer 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`,
+        'Authorization': `Bearer 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`,
         'X-GitHub-Api-Version': '2022-11-28'
       }
     });
